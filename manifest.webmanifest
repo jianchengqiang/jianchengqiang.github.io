@@ -1,0 +1,15 @@
+{
+  "name": "家庭财富管家",
+  "short_name": "财富管家",
+  "description": "记录收支 · 管理资产 · 规划存款",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f6f9",
+  "theme_color": "#4f6ef7",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
