@@ -390,6 +390,7 @@
       </div>
       <div class="card">
         <div class="section-title">数据</div>
+        <div class="row" onclick="window.open('manual.html','_blank')"><div class="k">使用说明书</div><div class="v">打开 ›</div></div>
         <div class="row" onclick="exportData()"><div class="k">导出备份</div><div class="v">JSON ›</div></div>
         <div class="row" onclick="document.getElementById('impFile').click()"><div class="k">导入备份</div><div class="v">选择文件 ›</div></div>
         <input id="impFile" type="file" accept="application/json" class="hidden" onchange="importData(this)">
