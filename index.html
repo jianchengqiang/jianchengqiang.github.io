@@ -491,7 +491,7 @@
 const STORE_KEY='wealth_tracker_v2';
 const INCOME=[{k:'工资',e:'💰',split:true},{k:'奖金',e:'🎁'},{k:'分红',e:'📊'},{k:'兼职',e:'🛠️'},{k:'其他收入',e:'✨'}];
 const EXPENSE=[{k:'生活费',e:'🏡'},{k:'房贷',e:'🏦'},{k:'餐饮',e:'🍜'},{k:'教育',e:'📚'},{k:'交通',e:'🚗'},{k:'购物',e:'🛍️'},{k:'娱乐',e:'🎮'},{k:'医疗',e:'💊'},{k:'人情',e:'🎉'},{k:'理财',e:'📈',invest:true},{k:'其他支出',e:'📦'}];
-const INVEST=[{k:'国内基金',key:'domestic_fund',e:'🇨🇳'},{k:'纳斯达克基金',key:'nasdaq_fund',e:'📈'},{k:'标普基金',key:'sp_fund',e:'📊'},{k:'实体黄金',key:'physical_gold',e:'🪙'},{k:'积存金',key:'gold_accum',e:'💛'},{k:'大A股票',key:'a_stock',e:'🐂'},{k:'美股',key:'us_stock',e:'🦅'}];
+const INVEST=[{k:'国内基金',key:'domestic_fund',e:'🇨🇳'},{k:'纳斯达克基金',key:'nasdaq_fund',e:'📈'},{k:'标普基金',key:'sp_fund',e:'📊'},{k:'实体黄金',key:'physical_gold',e:'🟨'},{k:'积存金',key:'gold_accum',e:'💛'},{k:'大A股票',key:'a_stock',e:'🐂'},{k:'美股',key:'us_stock',e:'🦅'}];
 const CAT_COLOR={'生活费':'#8b5cf6','房贷':'#0ea5e9','餐饮':'#f59e0b','教育':'#10b981','交通':'#3b82f6','购物':'#ec4899','娱乐':'#f43f5e','医疗':'#ef4444','人情':'#14b8a6','其他支出':'#94a3b8','工资':'#10b981','奖金':'#22c55e','分红':'#06b6d4','兼职':'#84cc16','其他收入':'#a3e635'};
 const CASH_KEYS=['alipay','bank','lingqiantong','unallocated'];
 function defaultAssets(){return{cash:{alipay:0,bank:0,lingqiantong:0,unallocated:0},invest:INVEST.reduce((o,i)=>{o[i.key]={amount:0,pnl:0};return o;},{})};}
