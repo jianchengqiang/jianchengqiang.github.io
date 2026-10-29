@@ -54,6 +54,13 @@
   .stat{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}
   .stat .label{font-size:12px;color:var(--sub);margin-bottom:6px}
   .stat .val{font-size:22px;font-weight:800;letter-spacing:.3px;font-variant-numeric:tabular-nums}
+  .stat-sub{font-size:10.5px;color:var(--sub);margin-top:5px;line-height:1.35;font-variant-numeric:tabular-nums}
+  .save-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:-2px 0 14px}
+  .save-split .ss-cell{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:12px 13px;border-left:3px solid var(--net)}
+  .save-split .ss-cell:last-child{border-left-color:var(--gold)}
+  .save-split .l{font-size:11.5px;color:var(--sub)}
+  .save-split .v{font-size:17px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums}
+  .save-split .h{font-size:10.5px;color:var(--sub);margin-top:3px;opacity:.85}
   .pill{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;font-weight:600}
   .pill.inc{background:var(--inc-bg);color:var(--inc)}
   .pill.exp{background:var(--exp-bg);color:var(--exp)}
@@ -80,6 +87,24 @@
   .field{margin-bottom:12px}
   .field label{font-size:12px;color:var(--sub);display:block;margin-bottom:6px}
   .field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:var(--input-bg);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  .amt-input{display:flex;align-items:stretch;gap:8px}
+  .amt-input input{flex:1;min-width:0}
+  .deltabtn{flex:0 0 42px;width:42px;border:1px solid var(--accent);background:var(--input-bg);color:var(--accent);border-radius:12px;font-size:18px;font-weight:800;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;padding:0}
+  .deltabtn:active{transform:scale(.94)}
+  .deltabtn.add{background:var(--inc-bg);border-color:var(--inc);color:var(--inc)}
+  .deltabtn.sub{background:var(--exp-bg);border-color:var(--exp);color:var(--exp)}
+  .cash-list{display:flex;flex-direction:column;gap:11px}
+  .cash-edit{display:flex;align-items:center;gap:10px}
+  .cash-edit>label{width:58px;flex:none;font-size:13px;color:var(--sub);font-weight:600}
+  .cash-edit .amt-input{flex:1;min-width:0}
+  .unalloc{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding:11px 13px;border-radius:13px;background:var(--gold-bg);border:1px dashed rgba(224,162,59,.55)}
+  .unalloc-info{display:flex;flex-direction:column;gap:1px;font-size:11.5px;color:var(--sub)}
+  .unalloc-info b{font-size:17px;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:.2px}
+  .allocbtn{flex:none;border:none;background:var(--gold);color:#fff;font-weight:700;font-size:13px;padding:10px 15px;border-radius:11px;cursor:pointer;transition:transform .15s}
+  .allocbtn:active{transform:scale(.95)}
+  .subcats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .subcat{padding:8px 12px;border:1px solid var(--line);border-radius:10px;font-size:13px;cursor:pointer;background:var(--input-bg);color:var(--ink);transition:all .15s}
+  .subcat.on{border-color:var(--accent);background:var(--net-bg);color:var(--accent);font-weight:700}
   .field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--net-bg)}
   .cats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
   .cat{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0;width:22%;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:var(--input-bg);font-size:11px;transition:all .15s}
@@ -153,6 +178,12 @@
   .inv-in input:focus{outline:none;border-color:var(--accent)}
   .inv-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--sub);margin-top:8px}
   .inv-meta .pos{color:var(--inc)}.inv-meta .neg{color:var(--exp)}
+  .inv-sum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:2px 0 14px}
+  .inv-sum .is-cell{background:var(--bg);border-radius:12px;padding:11px 12px}
+  .inv-sum .is-cell .l{font-size:11px;color:var(--sub);margin-bottom:3px}
+  .inv-sum .is-cell .v{font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+  .inv-sum .is-cell.hero{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
+  .inv-sum .is-cell.hero .l{color:rgba(255,255,255,.9)}
   .dep-card{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;border-radius:var(--radius);padding:14px;margin-bottom:12px}
   .dep-card .l{font-size:12px;opacity:.9}
   .dep-card .v{font-size:20px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
@@ -181,6 +212,11 @@
         <div class="stat"><div class="label">本月存款</div><div class="val" style="color:var(--net);font-size:18px" id="mNet">¥0</div></div>
       </div>
 
+      <div class="save-split" id="saveSplitCard">
+        <div class="ss-cell"><div class="l">本月现金存款</div><div class="v" id="mCashSave">¥0</div><div class="h" id="mCashHint">收入 − 支出</div></div>
+        <div class="ss-cell"><div class="l">本月投资存款</div><div class="v" id="mInvSave">¥0</div><div class="h" id="mInvHint">理财投入</div></div>
+      </div>
+
       <div class="stat">
         <div class="head-row" style="margin:0">
           <span class="label" style="margin:0">年度收支（<span class="yearpick"><select id="yearPick"></select></span>）</span>
@@ -191,6 +227,7 @@
           <div><div class="muted">年支出</div><div class="val" style="color:var(--exp);font-size:18px" id="yExp">¥0</div></div>
           <div><div class="muted">年存款</div><div class="val" style="color:var(--net);font-size:18px" id="yNet">¥0</div></div>
         </div>
+        <div class="muted" id="yNetSplit" style="margin-top:9px;font-size:11.5px">年存款 = 现金存款 ¥0 ＋ 投资存款 ¥0</div>
       </div>
 
       <div class="section-title">资产存款 <a href="#" onclick="switchTab('invest');return false;">去更新 ›</a></div>
@@ -250,24 +287,32 @@
   <section id="tab-invest" class="hidden">
     <div class="wrap">
       <div class="card">
-        <div class="section-title">现金存款</div>
-        <div class="row2">
-          <div class="field" style="margin:0"><label>支付宝</label><input id="cash_alipay" type="number" inputmode="decimal" placeholder="0"></div>
-          <div class="field" style="margin:0"><label>银行</label><input id="cash_bank" type="number" inputmode="decimal" placeholder="0"></div>
+        <div class="section-title">现金存款 <span class="muted" style="font-weight:400">（收入自动进未划现金，支出自动扣减）</span></div>
+        <div class="cash-list">
+          <div class="cash-edit"><label>支付宝</label><div class="amt-input"><button type="button" class="deltabtn" id="dm_cash_alipay" onclick="cycleMode('cash_alipay')">=</button><input id="cash_alipay" type="number" inputmode="decimal" placeholder="0" onchange="applyField('cash_alipay',null,this.value)"></div></div>
+          <div class="cash-edit"><label>银行</label><div class="amt-input"><button type="button" class="deltabtn" id="dm_cash_bank" onclick="cycleMode('cash_bank')">=</button><input id="cash_bank" type="number" inputmode="decimal" placeholder="0" onchange="applyField('cash_bank',null,this.value)"></div></div>
+          <div class="cash-edit"><label>零钱通</label><div class="amt-input"><button type="button" class="deltabtn" id="dm_cash_lingqiantong" onclick="cycleMode('cash_lingqiantong')">=</button><input id="cash_lingqiantong" type="number" inputmode="decimal" placeholder="0" onchange="applyField('cash_lingqiantong',null,this.value)"></div></div>
         </div>
-        <div class="nums" style="display:flex;justify-content:space-between;margin-top:12px;font-size:14px">现金合计 <b id="cashSum" style="color:var(--net)">¥0</b></div>
+        <div class="unalloc">
+          <div class="unalloc-info"><span>未划现金（记账收入自动汇总）</span><b id="cashUnalloc">¥0</b></div>
+          <button type="button" class="allocbtn" onclick="openAlloc()">划入账户</button>
+        </div>
+        <div class="nums" style="display:flex;justify-content:space-between;margin-top:12px;font-size:14px">现金合计（含未划） <b id="cashSum" style="color:var(--net)">¥0</b></div>
       </div>
 
       <div class="card">
-        <div class="section-title">投资存款（更新金额与盈亏）</div>
-        <div id="investList"></div>
-        <div class="nums" style="display:flex;justify-content:space-between;font-size:14px;margin-top:4px">
-          <span>投资合计 <b id="invSum" style="color:var(--net)">¥0</b></span>
-          <span>总盈亏 <b id="pnlSum">¥0</b></span>
+        <div class="section-title">投资存款 <span class="muted" style="font-weight:400">（本金 + 盈亏 = 投资金额）</span></div>
+        <div class="inv-sum">
+          <div class="is-cell"><div class="l">总投资金额</div><div class="v" id="invSum">¥0</div></div>
+          <div class="is-cell"><div class="l">总盈亏</div><div class="v" id="pnlSum">¥0</div></div>
+          <div class="is-cell hero"><div class="l">总投资合计</div><div class="v" id="invTotal">¥0</div></div>
+          <div class="is-cell"><div class="l">投资收益率</div><div class="v" id="invRate">0.00%</div></div>
         </div>
+        <div class="muted" style="margin:-4px 2px 12px">总投资金额 = 本金合计；总投资合计 = 本金 + 盈亏；投资收益率 = 总盈亏 ÷ 本金合计</div>
+        <div id="investList"></div>
       </div>
 
-      <div class="proj">总存款（现金 + 投资）= <span id="totalDep2" style="font-weight:800">¥0</span></div>
+      <div class="proj">总存款 = 现金存款 + 投资金额 = <span id="totalDep2" style="font-weight:800">¥0</span></div>
     </div>
   </section>
 
@@ -293,6 +338,7 @@
           <div><div class="muted">月均存款</div><div class="val" style="color:var(--net);font-size:18px" id="aAvg">¥0</div></div>
         </div>
         <div style="text-align:center;margin-top:8px"><span class="pill net" id="aRate">储蓄率 0%</span></div>
+        <div class="muted" id="aSplit" style="text-align:center;margin-top:7px;font-size:11.5px">年存款 = 现金存款 ¥0 ＋ 投资存款 ¥0</div>
       </div>
 
       <div class="card">
@@ -330,10 +376,12 @@
         <div class="section-title">偏好设置</div>
         <div class="row"><div class="k">默认年化收益率 %<div class="muted">用于增值规划测算</div></div><input id="setRate" type="number" inputmode="decimal" value="4"></div>
         <div class="row"><div class="k">货币符号</div><input id="setCur" type="text" value="¥" style="width:50px;text-align:center"></div>
-        <div class="row"><div class="k">月度目标存款<div class="muted">总览「攒钱目标进度」参照</div></div><input id="setMonth" type="number" inputmode="decimal" value="0"></div>
-        <div class="row"><div class="k">年度目标存款<div class="muted">总览「攒钱目标进度」参照</div></div><input id="setYear" type="number" inputmode="decimal" value="0"></div>
+        <div class="row"><div class="k">月度目标存款<div class="muted">按本月「现金存款 + 投资存款」合计计算进度</div></div><input id="setMonth" type="number" inputmode="decimal" value="0"></div>
+        <div class="row"><div class="k">年度目标存款<div class="muted">按本年「现金存款 + 投资存款」合计计算进度</div></div><input id="setYear" type="number" inputmode="decimal" value="0"></div>
         <div class="row"><div class="k">深色模式<div class="muted">夜间护眼，选择后本地保存</div></div>
           <label class="switch"><input id="setDark" type="checkbox"><span class="slider"></span></label></div>
+        <div class="row"><div class="k">支出自动扣现金<div class="muted">记一笔支出时，从所选来源账户扣减现金余额</div></div>
+          <label class="switch"><input id="setAutoDeduct" type="checkbox"><span class="slider"></span></label></div>
       </div>
       <div class="card">
         <div class="section-title">数据</div>
@@ -368,6 +416,8 @@
       <button id="segExp" class="exp" onclick="setType('expense')">支出</button>
     </div>
     <div class="cats" id="catBox"></div>
+    <div id="subBox" class="hidden"></div>
+    <div id="srcBox" class="hidden"></div>
 
     <div id="amtSingle" class="field">
       <label>金额</label>
@@ -416,35 +466,87 @@
   </div>
 </div>
 
+<!-- 未划现金划入浮窗 -->
+<div class="mask" id="allocMask">
+  <div class="sheet">
+    <h3>未划现金划入</h3>
+    <div class="muted" style="margin-bottom:12px">当前未划现金 <b id="allocAvail" style="color:var(--gold);font-size:16px">¥0</b></div>
+    <div class="field"><label>划入金额</label><input id="allocAmt" type="number" inputmode="decimal" placeholder="0.00"></div>
+    <div class="field"><label>划入到</label>
+      <div class="subcats" id="allocTargets">
+        <div class="subcat on" data-t="alipay" onclick="pickAllocTarget('alipay',this)">支付宝</div>
+        <div class="subcat" data-t="bank" onclick="pickAllocTarget('bank',this)">银行</div>
+        <div class="subcat" data-t="lingqiantong" onclick="pickAllocTarget('lingqiantong',this)">零钱通</div>
+      </div>
+    </div>
+    <button class="btn" onclick="doAlloc()">确认划入</button>
+    <button class="btn sec" onclick="closeAlloc()">取消</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 /* ---------- 数据层 ---------- */
 const STORE_KEY='wealth_tracker_v2';
 const INCOME=[{k:'工资',e:'💰',split:true},{k:'奖金',e:'🎁'},{k:'分红',e:'📊'},{k:'兼职',e:'🛠️'},{k:'其他收入',e:'✨'}];
-const EXPENSE=[{k:'生活费',e:'🏡'},{k:'房贷',e:'🏦'},{k:'餐饮',e:'🍜'},{k:'教育',e:'📚'},{k:'交通',e:'🚗'},{k:'购物',e:'🛍️'},{k:'娱乐',e:'🎮'},{k:'医疗',e:'💊'},{k:'人情',e:'🎉'},{k:'其他支出',e:'📦'}];
+const EXPENSE=[{k:'生活费',e:'🏡'},{k:'房贷',e:'🏦'},{k:'餐饮',e:'🍜'},{k:'教育',e:'📚'},{k:'交通',e:'🚗'},{k:'购物',e:'🛍️'},{k:'娱乐',e:'🎮'},{k:'医疗',e:'💊'},{k:'人情',e:'🎉'},{k:'理财',e:'📈',invest:true},{k:'其他支出',e:'📦'}];
 const INVEST=[{k:'国内基金',key:'domestic_fund',e:'🇨🇳'},{k:'纳斯达克基金',key:'nasdaq_fund',e:'📈'},{k:'标普基金',key:'sp_fund',e:'📊'},{k:'实体黄金',key:'physical_gold',e:'🪙'},{k:'积存金',key:'gold_accum',e:'💛'},{k:'大A股票',key:'a_stock',e:'🐂'},{k:'美股',key:'us_stock',e:'🦅'}];
 const CAT_COLOR={'生活费':'#8b5cf6','房贷':'#0ea5e9','餐饮':'#f59e0b','教育':'#10b981','交通':'#3b82f6','购物':'#ec4899','娱乐':'#f43f5e','医疗':'#ef4444','人情':'#14b8a6','其他支出':'#94a3b8','工资':'#10b981','奖金':'#22c55e','分红':'#06b6d4','兼职':'#84cc16','其他收入':'#a3e635'};
-function defaultAssets(){return{cash:{alipay:0,bank:0},invest:INVEST.reduce((o,i)=>{o[i.key]={amount:0,pnl:0};return o;},{})};}
+const CASH_KEYS=['alipay','bank','lingqiantong','unallocated'];
+function defaultAssets(){return{cash:{alipay:0,bank:0,lingqiantong:0,unallocated:0},invest:INVEST.reduce((o,i)=>{o[i.key]={amount:0,pnl:0};return o;},{})};}
+/* 兼容旧数据：补齐新增字段（零钱通 / 未划现金 / 缺失投资项 / 设置项） */
+function normalizeDB(r){if(!r)r={};
+  if(!Array.isArray(r.records))r.records=[];
+  r.assets=r.assets||defaultAssets();
+  r.assets.cash=r.assets.cash||{};
+  CASH_KEYS.forEach(k=>{const v=Number(r.assets.cash[k]);r.assets.cash[k]=isFinite(v)?v:0;});
+  r.assets.invest=r.assets.invest||{};
+  INVEST.forEach(i=>{if(!r.assets.invest[i.key]||typeof r.assets.invest[i.key]!=='object')r.assets.invest[i.key]={amount:0,pnl:0};
+    r.assets.invest[i.key].amount=Number(r.assets.invest[i.key].amount)||0;
+    r.assets.invest[i.key].pnl=Number(r.assets.invest[i.key].pnl)||0;});
+  r.goals=Array.isArray(r.goals)?r.goals:[];
+  r.settings=r.settings||{};
+  if(r.settings.returnRate==null)r.settings.returnRate=4;
+  if(r.settings.currency==null)r.settings.currency='¥';
+  if(r.settings.monthTarget==null)r.settings.monthTarget=0;
+  if(r.settings.yearTarget==null)r.settings.yearTarget=0;
+  if(r.settings.theme==null)r.settings.theme='auto';
+  if(r.settings.autoDeductExpense==null)r.settings.autoDeductExpense=true;
+  /* 口径迁移：旧版 amount 存的是「当前金额（市值）」，现改为「投资本金」；本金 = 市值 − 盈亏，迁移后总额与收益率不变 */
+  if(r.settings.investModel!=='principal'){
+    INVEST.forEach(i=>{const o=r.assets.invest[i.key];
+      const cost=Math.round((Number(o.amount||0)-Number(o.pnl||0))*100)/100;
+      o.amount=cost>0?cost:0;});
+    r.settings.investModel='principal';
+  }
+  return r;}
 let DB=load();
-function load(){try{const r=JSON.parse(localStorage.getItem(STORE_KEY));if(r&&r.records){if(!r.assets)r.assets=defaultAssets();return r;}}catch(e){}
-  return{records:[],assets:defaultAssets(),goals:[],settings:{returnRate:4,currency:'¥',monthTarget:0,yearTarget:0,theme:'auto'}};}
+function load(){try{const r=JSON.parse(localStorage.getItem(STORE_KEY));if(r&&r.records)return normalizeDB(r);}catch(e){}
+  return{records:[],assets:defaultAssets(),goals:[],settings:{returnRate:4,currency:'¥',monthTarget:0,yearTarget:0,theme:'auto',investModel:'principal',autoDeductExpense:true}};}
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(DB));STORAGE_OK=true;}catch(e){STORAGE_OK=false;storageWarn();}}
-/* 本地存储可用性检测：file:// 等受限环境下给出显式警告，避免“记了却没存住” */
 let STORAGE_OK=(function(){try{localStorage.setItem('__wb_probe__','1');localStorage.removeItem('__wb_probe__');return true;}catch(e){return false;}})();
-function storageWarn(){
-  if(document.getElementById('wbStorageWarn'))return;
-  const d=document.createElement('div');d.id='wbStorageWarn';
-  d.textContent='⚠️ 当前环境无法保存数据，记账内容关闭后会丢失。请改用“本地服务器地址(http://)”打开本页。';
+function storageWarn(){if(document.getElementById('wbStorageWarn'))return;const d=document.createElement('div');d.id='wbStorageWarn';
+  d.textContent='⚠️ 当前环境无法保存数据，记账内容关闭后会丢失。';
   d.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#f4607a;color:#fff;font-size:12.5px;line-height:1.5;padding:10px 14px calc(10px + env(safe-area-inset-bottom));text-align:center;box-shadow:0 -4px 12px rgba(0,0,0,.18)';
-  document.body.appendChild(d);
-}
+  document.body.appendChild(d);}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 
 /* ---------- 工具 ---------- */
 function cur(){return DB.settings.currency||'¥';}
 function fmt(n){const v=Number(n)||0;const s=Math.abs(v).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});return (v<0?'-':'')+cur()+s;}
 function fmt0(n){const v=Math.round(Number(n)||0);return cur()+v.toLocaleString('zh-CN');}
+function round2(x){return Math.round((Number(x)||0)*100)/100;}
+function invNameByKey(k){const i=INVEST.find(x=>x.key===k);return i?i.k:k;}
+function cashTotal(c){c=c||{};return round2(Number(c.alipay||0)+Number(c.bank||0)+Number(c.lingqiantong||0)+Number(c.unallocated||0));}
+/* 从现金按「指定账户优先，其余兜底」顺序扣减，返回实际扣减额 */
+function deductCash(amount,src){
+  let left=round2(amount);
+  const first=CASH_KEYS.indexOf(src)>=0?src:'unallocated';
+  const order=[first].concat(CASH_KEYS.filter(k=>k!==first));
+  order.forEach(k=>{if(left<=0)return;const bal=Number(DB.assets.cash[k]||0);if(bal<=0)return;
+    const take=Math.min(bal,left);DB.assets.cash[k]=round2(bal-take);left=round2(left-take);});
+  return round2(amount-left);}
 function todayStr(){const d=new Date();const p=x=>String(x).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
 function curY(){return String(new Date().getFullYear());}
 function nowYM(){const d=new Date();const p=x=>String(x).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1);}
@@ -454,10 +556,22 @@ function yearRecs(y){return DB.records.filter(r=>r.date.slice(0,4)===y);}
 function monthsLeft(deadline){if(!deadline)return null;const d=new Date(deadline+'T00:00:00');const t=new Date();t.setHours(0,0,0,0);return (d.getFullYear()-t.getFullYear())*12+(d.getMonth()-t.getMonth());}
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),1600);}
 
-/* 资产汇总 */
-function depositTotals(){const a=DB.assets;const cash=Number(a.cash.alipay||0)+Number(a.cash.bank||0);
-  let inv=0,pnl=0;INVEST.forEach(i=>{inv+=Number(a.invest[i.key].amount||0);pnl+=Number(a.invest[i.key].pnl||0);});
-  return{cash,inv,total:cash+inv,pnl};}
+/* 资产汇总：投资金额 = 投资本金 + 总盈亏 */
+function depositTotals(){const a=DB.assets;const cash=cashTotal(a.cash);
+  let principal=0,pnl=0;INVEST.forEach(i=>{principal+=Number(a.invest[i.key].amount||0);pnl+=Number(a.invest[i.key].pnl||0);});
+  principal=round2(principal);pnl=round2(pnl);
+  const inv=round2(principal+pnl);
+  return{cash,principal,pnl,inv,total:round2(cash+inv),unallocated:Number(a.cash.unallocated||0)};}
+
+/* 期间存款拆分：现金存款 = 收入 − 支出（理财买入已让现金流出）；投资存款 = 期间理财投入；存款合计 = 现金 + 投资 */
+function saveSplit(recs){
+  let inc=0,exp=0,inv=0;
+  recs.forEach(r=>{const a=Number(r.amount||0);
+    if(r.type==='income')inc+=a;
+    else{exp+=a;if(r.cat==='理财')inv+=a;}});
+  inc=round2(inc);exp=round2(exp);inv=round2(inv);
+  const cash=round2(inc-exp);
+  return{inc,exp,cash,investSave:inv,total:round2(cash+inv),consumption:round2(exp-inv)};}
 
 /* ---------- 导航 ---------- */
 function switchTab(t){document.querySelectorAll('.nav .item').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
@@ -473,16 +587,21 @@ function buildYearOptions(){const sel=document.getElementById('yearPick');const 
   sel.innerHTML=arr.map(y=>`<option value="${y}" ${y===cy?'selected':''}>${y}</option>`).join('');
   sel.onchange=()=>{renderHome();};}
 function renderHome(){const ym=nowYM();const recs=monthRecs(ym);
-  const inc=sum(recs,'income'),exp=sum(recs,'expense'),net=inc-exp;
-  document.getElementById('mInc').textContent=fmt(inc);
-  document.getElementById('mExp').textContent=fmt(exp);
-  document.getElementById('mNet').textContent=fmt(net);
+  const sp=saveSplit(recs);
+  document.getElementById('mInc').textContent=fmt(sp.inc);
+  document.getElementById('mExp').textContent=fmt(sp.exp);
+  document.getElementById('mNet').textContent=fmt(sp.total);
+  document.getElementById('mCashSave').textContent=fmt(sp.cash);
+  document.getElementById('mInvSave').textContent=fmt(sp.investSave);
+  document.getElementById('mCashHint').textContent='收入 '+fmt(sp.inc)+' − 支出 '+fmt(sp.exp);
+  document.getElementById('mInvHint').textContent='本月理财投入（已从现金划出）';
   const y=document.getElementById('yearPick').value||curY();
-  const yrecs=yearRecs(y);const yInc=sum(yrecs,'income'),yExp=sum(yrecs,'expense'),yNet=yInc-yExp;
-  document.getElementById('yInc').textContent=fmt(yInc);
-  document.getElementById('yExp').textContent=fmt(yExp);
-  document.getElementById('yNet').textContent=fmt(yNet);
-  const rate=yInc>0?Math.round(yNet/yInc*100):0;
+  const ysp=saveSplit(yearRecs(y));
+  document.getElementById('yInc').textContent=fmt(ysp.inc);
+  document.getElementById('yExp').textContent=fmt(ysp.exp);
+  document.getElementById('yNet').textContent=fmt(ysp.total);
+  document.getElementById('yNetSplit').textContent='年存款 = 现金存款 '+fmt(ysp.cash)+' ＋ 投资存款 '+fmt(ysp.investSave);
+  const rate=ysp.inc>0?Math.round(ysp.total/ysp.inc*100):0;
   document.getElementById('saveRateY').textContent='储蓄率 '+rate+'%';
   // 资产
   const dt=depositTotals();
@@ -498,26 +617,28 @@ function renderHome(){const ym=nowYM();const recs=monthRecs(ym);
   if(DB.goals.length===0){gm.innerHTML='<div class="muted">还没有目标，去「目标」里新建一个吧。</div>';}
   else{gm.innerHTML=DB.goals.slice(0,3).map(g=>{const pct=Math.min(100,Math.round((g.saved||0)/(g.target||1)*100));
     return `<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>${escapeHtml(g.name)}</span><span style="color:var(--sub)">${fmt(g.saved)} / ${fmt(g.target)}</span></div><div class="bar"><i style="width:${pct}%"></i></div></div>`;}).join('');}
-  // 增值规划
+  // 增值规划：月均存款按「现金存款 + 投资存款」合计
   const monthsDone=Math.max(1,new Date().getMonth()+1);
-  const avg=Math.max(0,yNet/monthsDone);
+  const avg=Math.max(0,ysp.total/monthsDone);
   document.getElementById('projMonthly').value=Math.round(avg);
   document.getElementById('projRate').value=DB.settings.returnRate;
   document.getElementById('projRateTxt').textContent=DB.settings.returnRate;
   calcProj();}
-function monthlyNetArr(y){const a=[];for(let m=1;m<=12;m++){const mm=y+'-'+String(m).padStart(2,'0');a.push(sum(monthRecs(mm),'income')-sum(monthRecs(mm),'expense'));}return a;}
+function monthlyNetArr(y){const a=[];for(let m=1;m<=12;m++){const mm=y+'-'+String(m).padStart(2,'0');a.push(saveSplit(monthRecs(mm)).total);}return a;}
 function renderTargetProgress(){
-  const ym=nowYM();const recs=monthRecs(ym);
-  const mNet=sum(recs,'income')-sum(recs,'expense');
+  const ym=nowYM();const mSp=saveSplit(monthRecs(ym));
   const y=document.getElementById('yearPick').value||curY();
-  const yrecs=yearRecs(y);const yNet=sum(yrecs,'income')-sum(yrecs,'expense');
+  const ySp=saveSplit(yearRecs(y));
+  const mNet=mSp.total,yNet=ySp.total;
   const mt=Number(DB.settings.monthTarget)||0,yt=Number(DB.settings.yearTarget)||0;
   const rows=[];
+  /* 进度条颜色：达标绿，未达标紫，负存款红 */
+  const barColor=v=>v<0?'linear-gradient(90deg,var(--exp),#ff9aae)':v>=1?'linear-gradient(90deg,#10b981,#34d399)':'linear-gradient(90deg,#6366f1,#8b5cf6)';
   if(mt>0){const p=Math.max(0,Math.min(100,Math.round(mNet/mt*100)));
-    rows.push(`<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>本月存款 / 目标 ${fmt(mt)}</span><span style="color:${mNet>=mt?'var(--inc)':'var(--sub)'}">${fmt(mNet)} · ${p}%</span></div><div class="bar"><i style="width:${p}%;background:${mNet>=mt?'linear-gradient(90deg,#10b981,#34d399)':'linear-gradient(90deg,#6366f1,#8b5cf6)'}"></i></div></div>`);}
+    rows.push(`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>本月存款 / 目标 ${fmt(mt)}</span><span style="font-weight:700;color:${mNet>=mt?'var(--inc)':mNet<0?'var(--exp)':'var(--sub)'}">${fmt(mNet)} · ${p}%</span></div><div class="bar"><i style="width:${p}%;background:${barColor(mNet/mt)}"></i></div><div class="muted" style="font-size:11.5px;margin-top:5px">收入 ${fmt(mSp.inc)} − 支出 ${fmt(mSp.exp)} = 现金存款 ${fmt(mSp.cash)}${mSp.investSave>0?` ＋ 投资存款 ${fmt(mSp.investSave)}`:''} = 存款 ${fmt(mNet)}</div></div>`);}
   if(yt>0){const p=Math.max(0,Math.min(100,Math.round(yNet/yt*100)));
-    rows.push(`<div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>${y}年存款 / 目标 ${fmt(yt)}</span><span style="color:${yNet>=yt?'var(--inc)':'var(--sub)'}">${fmt(yNet)} · ${p}%</span></div><div class="bar"><i style="width:${p}%;background:${yNet>=yt?'linear-gradient(90deg,#10b981,#34d399)':'linear-gradient(90deg,#6366f1,#8b5cf6)'}"></i></div></div>`);}
-  document.getElementById('targetProgress').innerHTML=rows.length?rows.join(''):'<div class="muted">在「设置」里填写月度/年度目标存款，这里会显示进度，并随设置实时变动。</div>';
+    rows.push(`<div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>${y}年存款 / 目标 ${fmt(yt)}</span><span style="font-weight:700;color:${yNet>=yt?'var(--inc)':yNet<0?'var(--exp)':'var(--sub)'}">${fmt(yNet)} · ${p}%</span></div><div class="bar"><i style="width:${p}%;background:${barColor(yNet/yt)}"></i></div><div class="muted" style="font-size:11.5px;margin-top:5px">收入 ${fmt(ySp.inc)} − 支出 ${fmt(ySp.exp)} = 现金存款 ${fmt(ySp.cash)}${ySp.investSave>0?` ＋ 投资存款 ${fmt(ySp.investSave)}`:''} = 存款 ${fmt(yNet)}</div></div>`);}
+  document.getElementById('targetProgress').innerHTML=rows.length?rows.join(''):'<div class="muted">在「设置」里填写月度/年度目标存款，这里会按「现金存款 + 投资存款」的合计显示进度，并随设置实时变动。</div>';
 }
 function calcProj(){const m=Number(document.getElementById('projMonthly').value)||0;
   const yr=Number(document.getElementById('projYears').value)||5;
@@ -544,45 +665,119 @@ function renderRecords(){if(!document.getElementById('recMonth').options.length)
   const box=document.getElementById('recList');
   if(rs.length===0){box.innerHTML='<div class="empty">本月还没有记录</div>';return;}
   const emo={};[...INCOME,...EXPENSE].forEach(c=>emo[c.k]=c.e);
-  box.innerHTML=rs.map(r=>`<div class="rec"><div class="ico">${emo[r.cat]||'💡'}</div>
-    <div class="meta"><div class="t">${r.cat}${r.sub?(' · '+r.sub):''}${r.note?' · '+escapeHtml(r.note):''}</div>
-    <div class="d">${r.date}</div></div>
+  box.innerHTML=rs.map(r=>{const subTxt=r.sub?(r.cat==='理财'?invNameByKey(r.sub):r.sub):'';
+    return `<div class="rec"><div class="ico">${emo[r.cat]||'💡'}</div>
+    <div class="meta"><div class="t">${r.cat}${subTxt?(' · '+subTxt):''}${r.note?' · '+escapeHtml(r.note):''}</div>
+    <div class="d">${r.date}${r.src?(' · '+srcName(r.src)):''}</div></div>
     <div class="amt ${r.type==='income'?'inc':'exp'}">${r.type==='income'?'+':'-'}${fmt(r.amount).replace(cur(),'')}</div>
-    <div class="del" onclick="delRec('${r.id}')">🗑</div></div>`).join('');}
-function delRec(id){if(!confirm('删除这条记录？'))return;DB.records=DB.records.filter(r=>r.id!==id);save();renderRecords();renderHome();toast('已删除');}
+    <div class="del" onclick="delRec('${r.id}')">🗑</div></div>`;}).join('');}
+function delRec(id){if(!confirm('删除这条记录？'))return;
+  const r=DB.records.find(x=>x.id===id);
+  if(r){
+    if(r.type==='income'){DB.assets.cash.unallocated=Math.max(0,round2(Number(DB.assets.cash.unallocated||0)-Number(r.amount||0)));}
+    else{
+      const back=(r.src&&CASH_KEYS.indexOf(r.src)>=0)?r.src:'unallocated';
+      const cashBack=round2(Number(r.deducted!=null?r.deducted:(r.cat==='理财'?r.amount:0))||0);
+      if(cashBack>0)DB.assets.cash[back]=round2(Number(DB.assets.cash[back]||0)+cashBack);   // 退回被扣的现金
+      if(r.cat==='理财'&&r.sub&&DB.assets.invest[r.sub])
+        DB.assets.invest[r.sub].amount=Math.max(0,round2(Number(DB.assets.invest[r.sub].amount||0)-cashBack));
+    }
+  }
+  DB.records=DB.records.filter(x=>x.id!==id);save();renderRecords();renderHome();renderInvest();updateDepositCards();toast('已删除');}
 
 /* ---------- 理财/资产 ---------- */
+const SYM={set:'=',add:'+',sub:'−'};
+let invMode={};
+function getAbs(k,field){
+  if(k.indexOf('cash_')===0)return Number(DB.assets.cash[k.slice(5)]||0);
+  return Number(DB.assets.invest[k][field]||0);}
+function setAbs(k,field,v){
+  if(k.indexOf('cash_')===0)DB.assets.cash[k.slice(5)]=v;
+  else DB.assets.invest[k][field]=v;}
+function applyField(k,field,raw){
+  if(raw===''||raw===null)return;
+  const mk=field?k+'|'+field:k;
+  const mode=invMode[mk]||'set';
+  const base=getAbs(k,field);
+  const input=Number(raw)||0;
+  let nv=mode==='add'?base+input:mode==='sub'?base-input:input;
+  nv=Math.round(nv*100)/100;
+  setAbs(k,field,nv);save();
+  const oldMode=mode;invMode[mk]='set';
+  renderInvest();updateDepositCards();
+  if(oldMode!=='set')toast(`已 ${oldMode==='add'?'+':'−'}${fmt(input)} → ${fmt(nv)}`);}
+function cycleMode(mk){
+  const order=['set','add','sub'];const cur=invMode[mk]||'set';
+  invMode[mk]=order[(order.indexOf(cur)+1)%3];
+  renderInvest();}
+function paintCash(id){
+  const mode=invMode[id]||'set';const inp=document.getElementById(id);
+  if(inp){inp.value=mode==='set'?(DB.assets.cash[id.split('_')[1]]||0):'';
+    inp.placeholder=mode==='add'?'增加额 (+)':mode==='sub'?'减少额 (−)':'0';}
+  const btn=document.getElementById('dm_'+id);
+  if(btn){btn.textContent=SYM[mode];btn.className='deltabtn'+(mode==='add'?' add':mode==='sub'?' sub':'');}}
 function renderInvest(){
-  document.getElementById('cash_alipay').value=DB.assets.cash.alipay||0;
-  document.getElementById('cash_bank').value=DB.assets.cash.bank||0;
+  paintCash('cash_alipay');paintCash('cash_bank');paintCash('cash_lingqiantong');
+  const ua=document.getElementById('cashUnalloc');if(ua)ua.textContent=fmt(DB.assets.cash.unallocated||0);
   const list=document.getElementById('investList');
-  list.innerHTML=INVEST.map(i=>`<div class="inv-row"><div class="ih"><span class="e">${i.e}</span>${i.k}</div>
+  list.innerHTML=INVEST.map(i=>{
+    const mka=i.key+'|amount', mkp=i.key+'|pnl';
+    const ma=invMode[mka]||'set', mp=invMode[mkp]||'set';
+    const amtV=ma==='set'?(DB.assets.invest[i.key].amount||0):'';
+    const pnlV=mp==='set'?(DB.assets.invest[i.key].pnl||0):'';
+    const pha=ma==='add'?'增加额 (+)':ma==='sub'?'减少额 (−)':'0';
+    const php=mp==='add'?'增加额 (+)':mp==='sub'?'减少额 (−)':'0';
+    return `<div class="inv-row"><div class="ih"><span class="e">${i.e}</span>${i.k}</div>
     <div class="inv-in">
-      <div><label>当前金额</label><input id="inv_${i.key}_amt" type="number" inputmode="decimal" value="${DB.assets.invest[i.key].amount||0}" oninput="updInvest('${i.key}','amount',this.value)"></div>
-      <div><label>盈亏金额</label><input id="inv_${i.key}_pnl" type="number" inputmode="decimal" value="${DB.assets.invest[i.key].pnl||0}" oninput="updInvest('${i.key}','pnl',this.value)"></div>
+      <div><label>投资本金</label><div class="amt-input"><button type="button" class="deltabtn${ma==='add'?' add':ma==='sub'?' sub':''}" id="dm_${mka}" onclick="cycleMode('${mka}')">${SYM[ma]}</button><input id="inv_${i.key}_amt" type="number" inputmode="decimal" value="${amtV}" placeholder="${pha}" onchange="applyField('${i.key}','amount',this.value)"></div></div>
+      <div><label>盈亏金额</label><div class="amt-input"><button type="button" class="deltabtn${mp==='add'?' add':mp==='sub'?' sub':''}" id="dm_${mkp}" onclick="cycleMode('${mkp}')">${SYM[mp]}</button><input id="inv_${i.key}_pnl" type="number" inputmode="decimal" value="${pnlV}" placeholder="${php}" onchange="applyField('${i.key}','pnl',this.value)"></div></div>
     </div>
-    <div class="inv-meta" id="meta_${i.key}"></div></div>`).join('');
+    <div class="inv-meta" id="meta_${i.key}"></div></div>`;}).join('');
   refreshInvest();}
-function updInvest(key,field,val){DB.assets.invest[key][field]=Number(val)||0;save();refreshInvest();updateDepositCards();}
-function updCash(){DB.assets.cash.alipay=Number(document.getElementById('cash_alipay').value)||0;
-  DB.assets.cash.bank=Number(document.getElementById('cash_bank').value)||0;save();refreshInvest();updateDepositCards();}
-document.getElementById('cash_alipay').addEventListener('input',updCash);
-document.getElementById('cash_bank').addEventListener('input',updCash);
 function refreshInvest(){
-  let inv=0,pnl=0;
-  INVEST.forEach(i=>{const a=DB.assets.invest[i.key];const amt=Number(a.amount||0),p=Number(a.pnl||0);inv+=amt;pnl+=p;
-    const cost=amt-p;const rate=cost>0?(p/cost*100):0;
+  let principal=0,pnl=0;
+  INVEST.forEach(i=>{const a=DB.assets.invest[i.key];
+    const cost=Number(a.amount||0),p=Number(a.pnl||0);principal+=cost;pnl+=p;
+    const value=round2(cost+p);const rate=cost>0?(p/cost*100):0;
     const meta=document.getElementById('meta_'+i.key);
-    if(meta)meta.innerHTML=`<span>金额 ${fmt(amt)}</span><span class="${p>=0?'pos':'neg'}">盈亏 ${fmt(p)} (${rate>=0?'+':''}${rate.toFixed(1)}%)</span>`;});
-  document.getElementById('cashSum').textContent=fmt(Number(DB.assets.cash.alipay||0)+Number(DB.assets.cash.bank||0));
-  document.getElementById('invSum').textContent=fmt(inv);
-  const ps=document.getElementById('pnlSum');ps.textContent=fmt(pnl);ps.className=pnl>=0?'pos':'neg';ps.style.color=pnl>=0?'var(--inc)':'var(--exp)';
-  const total=inv+Number(DB.assets.cash.alipay||0)+Number(DB.assets.cash.bank||0);
-  document.getElementById('totalDep2').textContent=fmt(total);}
+    if(meta)meta.innerHTML=`<span>市值 ${fmt(value)}</span><span class="${p>=0?'pos':'neg'}">盈亏 ${fmt(p)} (${rate>=0?'+':''}${rate.toFixed(1)}%)</span>`;});
+  principal=round2(principal);pnl=round2(pnl);
+  const invValue=round2(principal+pnl);
+  const rate=principal>0?(pnl/principal*100):0;
+  const csum=cashTotal(DB.assets.cash);
+  document.getElementById('cashSum').textContent=fmt(csum);
+  document.getElementById('invSum').textContent=fmt(principal);
+  const ps=document.getElementById('pnlSum');
+  if(ps){ps.textContent=(pnl>0?'+':'')+fmt(pnl);ps.style.color=pnl>0?'var(--inc)':(pnl<0?'var(--exp)':'');}
+  const it=document.getElementById('invTotal');if(it)it.textContent=fmt(invValue);
+  const ir=document.getElementById('invRate');
+  if(ir){ir.textContent=(rate>0?'+':'')+rate.toFixed(2)+'%';ir.style.color=rate>0?'var(--inc)':(rate<0?'var(--exp)':'');}
+  document.getElementById('totalDep2').textContent=fmt(invValue+csum);}
 function updateDepositCards(){const dt=depositTotals();
   const c=document.getElementById('cashDep');if(c)c.textContent=fmt(dt.cash);
   const iv=document.getElementById('invDep');if(iv)iv.textContent=fmt(dt.inv);
   const t=document.getElementById('totalDep');if(t)t.textContent=fmt(dt.total);}
+
+/* ---------- 未划现金划入 ---------- */
+let allocTarget='alipay';
+function openAlloc(){const avail=Number(DB.assets.cash.unallocated||0);
+  if(avail<=0){toast('暂无未划现金，先记一笔收入吧');return;}
+  document.getElementById('allocAvail').textContent=fmt(avail);
+  document.getElementById('allocAmt').value=avail;
+  allocTarget='alipay';
+  document.querySelectorAll('#allocTargets .subcat').forEach((el,i)=>el.classList.toggle('on',i===0));
+  document.getElementById('allocMask').classList.add('show');}
+function pickAllocTarget(t,el){allocTarget=t;document.querySelectorAll('#allocTargets .subcat').forEach(x=>x.classList.remove('on'));el.classList.add('on');}
+function closeAlloc(){document.getElementById('allocMask').classList.remove('show');}
+function doAlloc(){
+  const avail=Number(DB.assets.cash.unallocated||0);
+  let a=Number(document.getElementById('allocAmt').value)||0;
+  if(a<=0){toast('请输入金额');return;}
+  if(a>avail)a=avail;
+  DB.assets.cash.unallocated=round2(avail-a);
+  DB.assets.cash[allocTarget]=round2(Number(DB.assets.cash[allocTarget]||0)+a);
+  save();closeAlloc();renderInvest();updateDepositCards();renderHome();
+  toast('已划入 '+fmt(a)+' → '+({alipay:'支付宝',bank:'银行',lingqiantong:'零钱通'}[allocTarget]||allocTarget));}
 
 /* ---------- 目标 ---------- */
 let editGoalId=null,depGoalId=null;
@@ -603,8 +798,8 @@ function renderGoals(){const box=document.getElementById('goalList');
       <div class="acts"><button class="dep" onclick="openDep('${g.id}')">存入</button>
       <button onclick="editGoal('${g.id}')">编辑</button>
       <button onclick="delGoal('${g.id}')">删除</button></div></div>`;}).join('');}
-function avgMonthlyNet(){const y=curY();let yNet=0;for(let m=1;m<=12;m++){const mm=y+'-'+String(m).padStart(2,'0');yNet+=sum(monthRecs(mm),'income')-sum(monthRecs(mm),'expense');}
-  const md=Math.max(1,new Date().getMonth()+1);return Math.max(0,yNet/md);}
+function avgMonthlyNet(){const y=curY();let ySave=0;for(let m=1;m<=12;m++){const mm=y+'-'+String(m).padStart(2,'0');ySave+=saveSplit(monthRecs(mm)).total;}
+  const md=Math.max(1,new Date().getMonth()+1);return Math.max(0,ySave/md);}
 function openGoalSheet(){editGoalId=null;document.getElementById('goalTitle').textContent='新建存款目标';
   document.getElementById('gName').value='';document.getElementById('gTarget').value='';
   document.getElementById('gSaved').value='';document.getElementById('gDeadline').value='';
@@ -636,13 +831,14 @@ function doDeposit(){const g=DB.goals.find(x=>x.id===depGoalId);if(!g)return;
 /* ---------- 分析 ---------- */
 function renderAnalysis(){const y=curY();
   document.getElementById('anaYear').textContent=y;
-  const yrecs=yearRecs(y);const yInc=sum(yrecs,'income'),yExp=sum(yrecs,'expense'),yNet=yInc-yExp;
-  document.getElementById('aYInc').textContent=fmt(yInc);
-  document.getElementById('aYExp').textContent=fmt(yExp);
+  const ysp=saveSplit(yearRecs(y));
+  document.getElementById('aYInc').textContent=fmt(ysp.inc);
+  document.getElementById('aYExp').textContent=fmt(ysp.exp);
   const md=Math.max(1,new Date().getMonth()+1);
-  document.getElementById('aAvg').textContent=fmt(Math.max(0,yNet/md));
-  const rate=yInc>0?Math.round(yNet/yInc*100):0;
+  document.getElementById('aAvg').textContent=fmt(Math.max(0,ysp.total/md));
+  const rate=ysp.inc>0?Math.round(ysp.total/ysp.inc*100):0;
   document.getElementById('aRate').textContent='储蓄率 '+rate+'%';
+  document.getElementById('aSplit').textContent='年存款 = 现金存款 '+fmt(ysp.cash)+' ＋ 投资存款 '+fmt(ysp.investSave);
   // 月度分析与建议
   document.getElementById('monthAdvice').innerHTML=monthAdviceList(y);
   // 目标进度建议
@@ -652,7 +848,7 @@ function renderAnalysis(){const y=curY();
   const ym=document.getElementById('recMonth')?(document.getElementById('recMonth').value||nowYM()):nowYM();
   document.getElementById('anaMonth').textContent=ym;
   const exp=monthRecs(ym).filter(r=>r.type==='expense');
-  const byCat={};exp.forEach(r=>byCat[r.cat]=(byCat[r.cat]||0)+Number(r.amount||0));
+  const byCat={};exp.forEach(r=>{const k=(r.cat==='理财'&&r.sub)?('理财·'+invNameByKey(r.sub)):r.cat;byCat[k]=(byCat[k]||0)+Number(r.amount||0);});
   const data=Object.keys(byCat).map(k=>({label:k,value:byCat[k],color:CAT_COLOR[k]||'#94a3b8'})).sort((a,b)=>b.value-a.value);
   const box=document.getElementById('donut');const leg=document.getElementById('donutLegend');
   if(data.length===0){box.innerHTML='<div class="empty">本月暂无支出</div>';leg.innerHTML='';}
@@ -662,24 +858,25 @@ function renderAnalysis(){const y=curY();
 function monthAdviceList(y){
   const months=[];
   for(let m=1;m<=12;m++){const mm=y+'-'+String(m).padStart(2,'0');const recs=monthRecs(mm);
-    const inc=sum(recs,'income'),exp=sum(recs,'expense'),net=inc-exp;
-    if(inc>0||exp>0)months.push({m,inc,exp,net});}
+    const sp=saveSplit(recs);
+    if(sp.inc>0||sp.exp>0)months.push({m,inc:sp.inc,exp:sp.exp,net:sp.total,cash:sp.cash,inv:sp.investSave});}
   if(months.length===0)return '<div class="empty">本年还没有收支记录，先去记一笔吧。</div>';
   const avgExp=months.reduce((s,x)=>s+x.exp,0)/months.length;
   return months.sort((a,b)=>a.m-b.m).map(x=>{
     const rate=x.inc>0?Math.round(x.net/x.inc*100):0;
     let adv,warn=false;
-    if(x.net<0){adv='⚠️ 入不敷出，支出比收入多 '+fmt(-x.net)+'，需尽快压缩非必要开支。';warn=true;}
+    if(x.cash<0){adv='⚠️ 入不敷出：本月支出（含理财买入）比收入多 '+fmt(-x.cash)+'，需尽快压缩非必要开支或暂缓投入。';warn=true;}
     else if(rate<10){adv='储蓄率仅 '+rate+'%，偏低，建议把储蓄率提到 20% 以上，先砍掉弹性最大的支出。';}
     else if(rate>=30){adv='储蓄率 '+rate+'%，表现优秀，可加大理财投入或提前偿还负债。';}
     else{adv='储蓄率 '+rate+'%，处于合理区间，保持节奏即可。';}
+    if(x.inv>0){adv+=' 理财投入 '+fmt(x.inv)+' 已从现金划入投资存款，存款合计 '+fmt(x.net)+'。';}
     if(x.exp>avgExp*1.3&&avgExp>0){adv+=' 本月支出高于全年均值 '+fmt(avgExp)+' 约 '+Math.round((x.exp/avgExp-1)*100)+'%，注意控制。';}
     return `<div style="padding:11px 0;border-bottom:1px solid var(--line)">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <span style="font-weight:700;font-size:14px">${x.m}月</span>
-        <span class="pill ${x.net>=0?'net':'exp'}">净存 ${fmt(x.net)}</span>
+        <span class="pill ${x.net>=0?'net':'exp'}">存款 ${fmt(x.net)}</span>
       </div>
-      <div class="muted" style="margin:4px 0;font-size:12px">收入 ${fmt(x.inc)} · 支出 ${fmt(x.exp)} · 储蓄率 ${rate}%</div>
+      <div class="muted" style="margin:4px 0;font-size:12px">收入 ${fmt0(x.inc)} · 支出 ${fmt0(x.exp)} · 现金存款 ${fmt0(x.cash)} · 投资存款 ${fmt0(x.inv)} · 储蓄率 ${rate}%</div>
       <div style="font-size:12.5px;line-height:1.5;${warn?'color:var(--exp);background:rgba(244,63,94,.08);padding:8px 10px;border-radius:10px':'color:var(--sub)'}">${adv}</div>
     </div>`;
   }).join('');}
@@ -737,8 +934,10 @@ function lineChart(vals,y){const W=320,H=150,pad=22;const max=Math.max(1,...vals
   return s;}
 
 /* ---------- 记账浮窗 ---------- */
-let curType='income',curCat='工资';
-function setType(t){curType=t;curCat=(t==='income')?'工资':EXPENSE[0].k;
+let curType='income',curCat='工资',curInvestSub='',curExpSrc='unallocated';
+const SRC_LIST=[{k:'unallocated',n:'未划现金'},{k:'alipay',n:'支付宝'},{k:'bank',n:'银行'},{k:'lingqiantong',n:'零钱通'}];
+function srcName(k){const s=SRC_LIST.find(x=>x.k===k);return s?s.n:'未划现金';}
+function setType(t){curType=t;curCat=(t==='income')?'工资':EXPENSE[0].k;curInvestSub='';curExpSrc='unallocated';
   document.getElementById('segInc').classList.toggle('on',t==='income');
   document.getElementById('segExp').classList.toggle('on',t==='expense');renderCats();}
 function renderCats(){const box=document.getElementById('catBox');const list=curType==='income'?INCOME:EXPENSE;
@@ -749,17 +948,61 @@ function renderCats(){const box=document.getElementById('catBox');const list=cur
   toggleSalary();}
 function pickCat(k,el){curCat=k;document.querySelectorAll('#catBox .cat').forEach(x=>x.classList.remove('on'));el.classList.add('on');toggleSalary();}
 function toggleSalary(){const isSalary=curType==='income'&&curCat==='工资';
+  const isInvest=curType==='expense'&&curCat==='理财';
+  const isExpense=curType==='expense';
   document.getElementById('amtSalary').classList.toggle('hidden',!isSalary);
-  document.getElementById('amtSingle').classList.toggle('hidden',isSalary);}
+  document.getElementById('amtSingle').classList.toggle('hidden',isSalary);
+  const sub=document.getElementById('subBox'),src=document.getElementById('srcBox');
+  if(isInvest){if(!curInvestSub||!INVEST.some(i=>i.key===curInvestSub))curInvestSub=INVEST[0].key;
+    renderSubs();sub.classList.remove('hidden');}
+  else{sub.classList.add('hidden');}
+  /* 所有支出都显示资金来源（普通支出按该账户自动扣现金；理财买入则从该账户转入投资） */
+  if(isExpense){if(CASH_KEYS.indexOf(curExpSrc)<0)curExpSrc='unallocated';renderSrcBox();src.classList.remove('hidden');}
+  else{src.classList.add('hidden');}
+}
+function renderSubs(){
+  document.getElementById('subBox').innerHTML=
+    '<label style="font-size:12px;color:var(--sub);display:block;margin-bottom:7px">投入项（保存后转入「理财」栏对应金额）</label><div class="subcats">'+
+      INVEST.map(i=>`<div class="subcat invchip${curInvestSub===i.key?' on':''}" onclick="pickInvest('${i.key}',this)">${i.e} ${i.k}</div>`).join('')+'</div>';
+}
+function renderSrcBox(){
+  const tip=curCat==='理财'
+    ?'资金来源（买入即从该账户扣减，转到投资，总存款不变）'
+    :'资金来源（保存后从该账户自动扣减现金余额）';
+  document.getElementById('srcBox').innerHTML=
+    '<label style="font-size:12px;color:var(--sub);display:block;margin:2px 0 7px">'+tip+'</label>'+
+    '<div class="subcats">'+SRC_LIST.map(s=>`<div class="subcat srcchip${curExpSrc===s.k?' on':''}" onclick="pickExpSrc('${s.k}',this)">${s.n}</div>`).join('')+'</div>'+
+    '<div class="muted" style="font-size:11.5px;margin-top:6px" id="srcHint">余额：'+SRC_LIST.map(s=>s.n+' '+fmt(DB.assets.cash[s.k]||0)).join(' · ')+'</div>';
+}
+function pickInvest(key,el){curInvestSub=key;document.querySelectorAll('#subBox .invchip').forEach(x=>x.classList.remove('on'));el.classList.add('on');}
+function pickExpSrc(k,el){curExpSrc=k;document.querySelectorAll('#srcBox .srcchip').forEach(x=>x.classList.remove('on'));el.classList.add('on');}
 function openSheet(){curType='income';curCat='工资';setType('income');
   document.getElementById('amt').value='';document.getElementById('salBase').value='';document.getElementById('salPerf').value='';
   document.getElementById('rdate').value=todayStr();document.getElementById('rnote').value='';
   document.getElementById('sheetMask').classList.add('show');}
 function closeSheet(){document.getElementById('sheetMask').classList.remove('show');}
-function pushRec(type,cat,sub,amount,date,note){DB.records.push({id:uid(),type,cat,sub:sub||'',amount:Number(amount)||0,date:date||todayStr(),note:note||''});}
+/* 记一笔：收入→未划现金；理财买入→现金扣减并转入投资本金；普通支出→按来源账户扣减现金 */
+function pushRec(type,cat,sub,amount,date,note,src){
+  const amt=round2(amount);const s=sub||'';
+  const useSrc=(CASH_KEYS.indexOf(src)>=0)?src:'unallocated';
+  const rec={id:uid(),type,cat,sub:s,amount:amt,date:date||todayStr(),note:note||'',src:'',deducted:0};
+  if(type==='income'){
+    DB.assets.cash.unallocated=round2(Number(DB.assets.cash.unallocated||0)+amt);
+  }else if(cat==='理财'&&s&&DB.assets.invest[s]){
+    const got=deductCash(amt,useSrc);                                          // 现金扣减
+    DB.assets.invest[s].amount=round2(Number(DB.assets.invest[s].amount||0)+got);  // 转入投资 → 总存款不变
+    rec.src=useSrc;rec.deducted=got;
+  }else if(DB.settings.autoDeductExpense!==false){
+    const got=deductCash(amt,useSrc);                                          // 普通支出也自动扣现金
+    rec.src=useSrc;rec.deducted=got;
+  }
+  DB.records.push(rec);
+  return rec;
+}
 function saveRecord(){
   const date=document.getElementById('rdate').value||todayStr();
   const note=document.getElementById('rnote').value.trim();
+  let short=0;
   if(curType==='income'&&curCat==='工资'){
     const b=Number(document.getElementById('salBase').value)||0;
     const p=Number(document.getElementById('salPerf').value)||0;
@@ -769,30 +1012,43 @@ function saveRecord(){
   }else{
     const amt=Number(document.getElementById('amt').value)||0;
     if(amt<=0){toast('请输入有效金额');return;}
-    pushRec(curType,curCat,'',amt,date,note);
+    if(curType==='expense'&&curCat==='理财'){
+      if(!curInvestSub){toast('请选择投入项');return;}
+      const avail=cashTotal(DB.assets.cash);
+      if(avail<amt){toast('现金合计不足（可用 '+fmt(avail)+'），请先补足现金或减少金额');return;}
+      pushRec('expense','理财',curInvestSub,amt,date,note,curExpSrc);
+    }else{
+      const rec=pushRec(curType,curCat,'',amt,date,note,curExpSrc);
+      if(curType==='expense'&&rec)short=round2(amt-Number(rec.deducted||0));
+    }
   }
-  save();closeSheet();renderHome();renderRecords();toast('已记录');}
+  save();closeSheet();renderHome();renderRecords();renderInvest();updateDepositCards();
+  if(short>0)toast('已记录，但现金余额不足，¥'+short.toLocaleString('zh-CN')+' 未扣到现金');
+  else toast('已记录');}
 document.getElementById('sheetMask').addEventListener('click',e=>{if(e.target.id==='sheetMask')closeSheet();});
 document.getElementById('goalMask').addEventListener('click',e=>{if(e.target.id==='goalMask')closeGoal();});
 document.getElementById('depMask').addEventListener('click',e=>{if(e.target.id==='depMask')closeDep();});
+document.getElementById('allocMask').addEventListener('click',e=>{if(e.target.id==='allocMask')closeAlloc();});
 
 /* ---------- 设置 ---------- */
 function renderSet(){document.getElementById('setRate').value=DB.settings.returnRate;
   document.getElementById('setCur').value=DB.settings.currency||'¥';
   document.getElementById('setMonth').value=DB.settings.monthTarget||0;
   document.getElementById('setYear').value=DB.settings.yearTarget||0;
-  document.getElementById('setDark').checked=(document.documentElement.getAttribute('data-theme')==='dark');}
+  document.getElementById('setDark').checked=(document.documentElement.getAttribute('data-theme')==='dark');
+  document.getElementById('setAutoDeduct').checked=DB.settings.autoDeductExpense!==false;}
 document.getElementById('setRate').addEventListener('change',function(){DB.settings.returnRate=Number(this.value)||0;save();renderHome();});
 document.getElementById('setCur').addEventListener('change',function(){DB.settings.currency=this.value||'¥';save();renderHome();renderRecords();renderAnalysis();renderInvest();});
 document.getElementById('setMonth').addEventListener('change',function(){DB.settings.monthTarget=Number(this.value)||0;save();renderHome();});
 document.getElementById('setYear').addEventListener('change',function(){DB.settings.yearTarget=Number(this.value)||0;save();renderHome();});
 document.getElementById('setDark').addEventListener('change',function(){DB.settings.theme=this.checked?'dark':'light';save();applyTheme();});
+document.getElementById('setAutoDeduct').addEventListener('change',function(){DB.settings.autoDeductExpense=!!this.checked;save();toast(this.checked?'支出将自动扣减现金':'支出不再自动扣现金');});
 function exportData(){const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='财富管家备份_'+todayStr()+'.json';a.click();toast('已导出');}
 function importData(input){const f=input.files[0];if(!f)return;const rd=new FileReader();
-  rd.onload=()=>{try{const d=JSON.parse(rd.result);if(!d.records)throw 0;
-    if(confirm('导入将覆盖当前数据，确定？')){if(!d.assets)d.assets=defaultAssets();DB=d;save();buildYearOptions();applyTheme();renderHome();renderRecords();renderGoals();renderInvest();toast('导入成功');}}catch(e){toast('文件格式不正确');}}
+  rd.onload=()=>{try{const raw=JSON.parse(rd.result);if(!raw.records)throw 0;
+    if(confirm('导入将覆盖当前数据，确定？')){DB=normalizeDB(raw);invMode={};save();buildYearOptions();applyTheme();renderHome();renderRecords();renderGoals();renderInvest();updateDepositCards();toast('导入成功');}}catch(e){toast('文件格式不正确');}}
   rd.readAsText(f);input.value='';}
 function clearData(){if(!confirm('确定清空全部收支记录与目标？资产存款将保留。'))return;
   DB.records=[];DB.goals=[];save();buildYearOptions();renderHome();renderRecords();renderGoals();toast('已清空收支与目标');}
@@ -814,11 +1070,7 @@ function toggleTheme(){const cur=document.documentElement.getAttribute('data-the
 /* ---------- 启动 ---------- */
 applyTheme();buildYearOptions();renderHome();renderCats();buildMonthOptions();
 if(!STORAGE_OK)storageWarn();
-
-/* ---------- PWA 离线缓存（仅在线上 https 环境生效） ---------- */
-if('serviceWorker' in navigator && location.protocol==='https:'){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+if('serviceWorker' in navigator && location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 </script>
 </body>
 </html>
