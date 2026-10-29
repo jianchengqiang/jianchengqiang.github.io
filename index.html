@@ -206,15 +206,19 @@
   <!-- 总览 -->
   <section id="tab-home">
     <div class="wrap">
+      <div class="head-row" style="margin:0 0 10px">
+        <span class="label" style="margin:0">月度收支（<span class="yearpick"><select id="monthPick"></select></span>）</span>
+        <span class="pill net" id="saveRateM">储蓄率 0%</span>
+      </div>
       <div class="grid3">
-        <div class="stat"><div class="label">本月收入</div><div class="val" style="color:var(--inc);font-size:18px" id="mInc">¥0</div></div>
-        <div class="stat"><div class="label">本月支出</div><div class="val" style="color:var(--exp);font-size:18px" id="mExp">¥0</div></div>
-        <div class="stat"><div class="label">本月存款</div><div class="val" style="color:var(--net);font-size:18px" id="mNet">¥0</div></div>
+        <div class="stat"><div class="label" id="mIncL">本月收入</div><div class="val" style="color:var(--inc);font-size:18px" id="mInc">¥0</div></div>
+        <div class="stat"><div class="label" id="mExpL">本月支出</div><div class="val" style="color:var(--exp);font-size:18px" id="mExp">¥0</div></div>
+        <div class="stat"><div class="label" id="mNetL">本月存款</div><div class="val" style="color:var(--net);font-size:18px" id="mNet">¥0</div></div>
       </div>
 
       <div class="save-split" id="saveSplitCard">
-        <div class="ss-cell"><div class="l">本月现金存款</div><div class="v" id="mCashSave">¥0</div><div class="h" id="mCashHint">收入 − 支出</div></div>
-        <div class="ss-cell"><div class="l">本月投资存款</div><div class="v" id="mInvSave">¥0</div><div class="h" id="mInvHint">理财投入</div></div>
+        <div class="ss-cell"><div class="l" id="mCashL">本月现金存款</div><div class="v" id="mCashSave">¥0</div><div class="h" id="mCashHint">收入 − 支出</div></div>
+        <div class="ss-cell"><div class="l" id="mInvL">本月投资存款</div><div class="v" id="mInvSave">¥0</div><div class="h" id="mInvHint">理财投入</div></div>
       </div>
 
       <div class="stat">
@@ -586,15 +590,30 @@ function buildYearOptions(){const sel=document.getElementById('yearPick');const 
   const arr=[...ys].sort().reverse();const cy=sel.value||curY();
   sel.innerHTML=arr.map(y=>`<option value="${y}" ${y===cy?'selected':''}>${y}</option>`).join('');
   sel.onchange=()=>{renderHome();};}
-function renderHome(){const ym=nowYM();const recs=monthRecs(ym);
+let homeYM=null;
+function buildMonthPickOptions(){const sel=document.getElementById('monthPick');if(!sel)return;
+  const ms=new Set(DB.records.map(r=>r.date.slice(0,7)));ms.add(nowYM());
+  const arr=[...ms].sort().reverse();const cur=homeYM||nowYM();
+  sel.innerHTML=arr.map(ym=>{const [y,m]=ym.split('-');const t=(y===curY()?Number(m)+'月':y+'年'+Number(m)+'月');
+    return `<option value="${ym}" ${ym===cur?'selected':''}>${t}</option>`;}).join('');
+  sel.onchange=()=>{homeYM=sel.value;renderHome();};}
+function renderHome(){const ym=homeYM||nowYM();const recs=monthRecs(ym);buildMonthPickOptions();
   const sp=saveSplit(recs);
+  const [yy,mm]=ym.split('-');const lbl=(yy===curY()?Number(mm)+'月':yy+'年'+Number(mm)+'月');
+  document.getElementById('mIncL').textContent=lbl+'收入';
+  document.getElementById('mExpL').textContent=lbl+'支出';
+  document.getElementById('mNetL').textContent=lbl+'存款';
+  document.getElementById('mCashL').textContent=lbl+'现金存款';
+  document.getElementById('mInvL').textContent=lbl+'投资存款';
   document.getElementById('mInc').textContent=fmt(sp.inc);
   document.getElementById('mExp').textContent=fmt(sp.exp);
   document.getElementById('mNet').textContent=fmt(sp.total);
   document.getElementById('mCashSave').textContent=fmt(sp.cash);
   document.getElementById('mInvSave').textContent=fmt(sp.investSave);
   document.getElementById('mCashHint').textContent='收入 '+fmt(sp.inc)+' − 支出 '+fmt(sp.exp);
-  document.getElementById('mInvHint').textContent='本月理财投入（已从现金划出）';
+  document.getElementById('mInvHint').textContent=lbl+'理财投入（已从现金划出）';
+  const rateM=sp.inc>0?Math.round(sp.total/sp.inc*100):0;
+  document.getElementById('saveRateM').textContent='储蓄率 '+rateM+'%';
   const y=document.getElementById('yearPick').value||curY();
   const ysp=saveSplit(yearRecs(y));
   document.getElementById('yInc').textContent=fmt(ysp.inc);
